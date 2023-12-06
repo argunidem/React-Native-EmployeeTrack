@@ -1,8 +1,11 @@
 import { ScrollView, StyleSheet, View, Text, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather, Entypo, Ionicons, Octicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
-const index = () => {
+const Index = () => {
+   const router = useRouter();
+
    return (
       <ScrollView>
          <LinearGradient
@@ -41,6 +44,7 @@ const index = () => {
                   }}
                >
                   <Pressable
+                     onPress={() => router.push("/(home)/employees")}
                      style={{
                         backgroundColor: "#D3CCE3",
                         padding: 12,
@@ -476,6 +480,6 @@ const index = () => {
    );
 };
 
-export default index;
+export default Index;
 
 const styles = StyleSheet.create({});
