@@ -6,6 +6,8 @@ export default function Layout() {
          <Stack.Screen name='index' />
          <Stack.Screen name='employees' />
          <Stack.Screen name='add-details' />
+         <Stack.Screen name='mark-attendance' />
+         <Stack.Screen name='[user]' />
       </Stack>
    );
 }

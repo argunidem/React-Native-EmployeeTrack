@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import axios from "axios";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import SearchResults from "../../components/search-results";
 
 const Employees = () => {
    const [employees, setEmployees] = useState([]);
@@ -45,7 +46,7 @@ const Employees = () => {
                   gap: 10,
                   backgroundColor: "white",
                   height: 40,
-                  borderRadius: 4,
+                  borderRadius: 3,
                   flex: 1,
                }}
             >
@@ -75,6 +76,33 @@ const Employees = () => {
                )}
             </Pressable>
          </View>
+
+         {employees.length > 0 ? (
+            <SearchResults
+               data={employees}
+               input={input}
+               setInput={setInput}
+            />
+         ) : (
+            <View
+               style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+               }}
+            >
+               <Text>No Data</Text>
+               <Text>Add an employee</Text>
+               <Pressable onPress={() => router.push("/(home)/add-details")}>
+                  <AntDesign
+                     style={{ marginTop: 30 }}
+                     name='pluscircle'
+                     size={24}
+                     color='black'
+                  />
+               </Pressable>
+            </View>
+         )}
       </View>
    );
 };
