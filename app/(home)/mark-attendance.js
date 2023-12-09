@@ -1,16 +1,15 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, View, Pressable } from "react-native";
 import axios from "axios";
 import moment from "moment";
-import { AntDesign } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import Date from "../../components/mark-attendance/date";
+import User from "../../components/mark-attendance/user";
+import BackButton from "../../components/shared/back-button";
 
 const MarkAttendance = () => {
    const [employees, setEmployees] = useState([]);
    const [attendance, setAttendance] = useState([]);
    const [currentDate, setCurrentDate] = useState(moment());
-
-   const router = useRouter();
 
    useEffect(() => {
       const fetchEmployeeData = async () => {
@@ -24,20 +23,6 @@ const MarkAttendance = () => {
       };
       fetchEmployeeData();
    }, []);
-
-   const goToNextDay = () => {
-      const nextDate = moment(currentDate).add(1, "day");
-      setCurrentDate(nextDate);
-   };
-
-   const goToPrevDay = () => {
-      const prevDate = moment(currentDate).subtract(1, "day");
-      setCurrentDate(prevDate);
-   };
-
-   const formatDate = (date) => {
-      return date.format("MMMM D, YYYY");
-   };
 
    const fetchAttendanceData = async () => {
       try {
@@ -56,101 +41,36 @@ const MarkAttendance = () => {
       fetchAttendanceData();
    }, [currentDate]);
 
+   const employeeWithAttendance = employees.map((employee) => {
+      const attendanceRecord = attendance.find(
+         (record) => record.employeeId === employee.employeeId
+      );
+
+      return {
+         ...employee,
+         status: attendanceRecord ? attendanceRecord.status : "",
+      };
+   });
+
    return (
-      <View
-         style={{
-            flex: 1,
-            backgroundColor: "white",
-         }}
-      >
+      <View style={styles.container}>
          <Pressable>
-            <View
-               style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 10,
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  marginVertical: 20,
-               }}
-            >
-               <AntDesign
-                  onPress={goToPrevDay}
-                  name='left'
-                  size={24}
-                  color='black'
-               />
-               <Text style={{ fontWeight: "bold" }}>{formatDate(currentDate)}</Text>
-               <AntDesign
-                  onPress={goToNextDay}
-                  name='right'
-                  size={24}
-                  color='black'
-               />
+            <View style={styles.optionsContainer}>
+               <BackButton />
+               <View style={styles.dateContainer}>
+                  <Date
+                     currentDate={currentDate}
+                     setCurrentDate={setCurrentDate}
+                  />
+               </View>
             </View>
 
             <View style={{ marginHorizontal: 12 }}>
-               {employees.map((item, index) => (
-                  <Pressable
-                     onPress={() =>
-                        router.push({
-                           pathname: "/[user]",
-                           params: {
-                              name: item.employeeName,
-                              id: item.employeeId,
-                              salary: item?.salary,
-                              designation: item?.designation,
-                           },
-                        })
-                     }
+               {employeeWithAttendance.map((item, index) => (
+                  <User
                      key={index}
-                     style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: 10,
-                     }}
-                  >
-                     <View
-                        style={{
-                           width: 50,
-                           height: 50,
-                           borderRadius: 8,
-                           padding: 10,
-                           backgroundColor: "#4b6cb7",
-                           alignItems: "center",
-                           justifyContent: "center",
-                        }}
-                     >
-                        <Text
-                           style={{
-                              color: "white",
-                              fontSize: 22,
-                           }}
-                        >
-                           {item?.employeeName?.charAt(0)}
-                        </Text>
-                     </View>
-
-                     <View style={{ flex: 1 }}>
-                        <Text
-                           style={{
-                              fontSize: 16,
-                              fontWeight: "bold",
-                           }}
-                        >
-                           {item?.employeeName}
-                        </Text>
-                        <Text
-                           style={{
-                              marginTop: 5,
-                              color: "gray",
-                              fontSize: 14,
-                           }}
-                        >
-                           {item?.designation} ({item?.employeeId})
-                        </Text>
-                     </View>
-                  </Pressable>
+                     item={item}
+                  />
                ))}
             </View>
          </Pressable>
@@ -160,4 +80,16 @@ const MarkAttendance = () => {
 
 export default MarkAttendance;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+   container: {
+      flex: 1,
+      backgroundColor: "white",
+   },
+   optionsContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+   },
+   dateContainer: {
+      marginLeft: "15%",
+   },
+});

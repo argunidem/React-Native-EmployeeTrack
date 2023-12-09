@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { StyleSheet, Text, View, ScrollView, TextInput, Pressable, Alert } from "react-native";
 import axios from "axios";
+import BackButton from "../../components/shared/back-button";
+import Input from "../../components/add-details/input";
+import Label from "../../components/add-details/label";
 
 const AddDetails = () => {
    const [name, setName] = useState("");
@@ -45,278 +48,88 @@ const AddDetails = () => {
    };
 
    return (
-      <ScrollView
-         style={{
-            flex: 1,
-            backgroundColor: "white",
-         }}
-      >
-         <View style={{ padding: 10 }}>
-            <Text
-               style={{
-                  fontSize: 17,
-                  fontWeight: "bold",
-               }}
-            >
-               Add new employee
-            </Text>
-            <TextInput
-               style={{
-                  padding: 10,
-                  borderColor: "#D0D0D0",
-                  borderWidth: 1,
-                  marginTop: 10,
-                  borderRadius: 5,
-               }}
-               placeholder='Poland'
-               placeholderTextColor={"black"}
-            />
+      <ScrollView style={styles.container}>
+         <BackButton />
+         <View style={styles.formContainer}>
+            <Text style={styles.title}>Add new employee</Text>
 
-            <View
-               style={{
-                  marginVertical: 10,
-               }}
-            >
-               <Text
-                  style={{
-                     fontSize: 17,
-                     fontWeight: "bold",
-                  }}
-               >
-                  Full Name
-               </Text>
-               <TextInput
+            <View>
+               <Label>Full Name</Label>
+               <Input
                   value={name}
-                  onChangeText={(text) => setName(text)}
-                  style={{
-                     padding: 10,
-                     borderColor: "#D0D0D0",
-                     borderWidth: 1,
-                     marginTop: 10,
-                     borderRadius: 5,
-                  }}
+                  onChange={(text) => setName(text)}
                   placeholder='Enter full name'
-                  placeholderTextColor={"black"}
                />
             </View>
 
             <View>
-               <Text
-                  style={{
-                     fontSize: 17,
-                     fontWeight: "bold",
-                  }}
-               >
-                  Employee ID
-               </Text>
-               <TextInput
+               <Label>Employee ID</Label>
+               <Input
                   value={employeeId}
-                  onChangeText={(text) => setEmployeeId(text)}
-                  style={{
-                     padding: 10,
-                     borderColor: "#D0D0D0",
-                     borderWidth: 1,
-                     marginTop: 10,
-                     borderRadius: 5,
-                  }}
+                  onChange={(text) => setEmployeeId(text)}
                   placeholder='Employee ID'
-                  placeholderTextColor={"black"}
                />
             </View>
 
-            <View
-               style={{
-                  marginVertical: 10,
-               }}
-            >
-               <Text
-                  style={{
-                     fontSize: 17,
-                     fontWeight: "bold",
-                  }}
-               >
-                  Designation
-               </Text>
-               <TextInput
+            <View>
+               <Label>Designation</Label>
+               <Input
                   value={designation}
-                  onChangeText={(text) => setDesignation(text)}
-                  style={{
-                     padding: 10,
-                     borderColor: "#D0D0D0",
-                     borderWidth: 1,
-                     marginTop: 10,
-                     borderRadius: 5,
-                  }}
+                  onChange={(text) => setDesignation(text)}
                   placeholder='Designation'
-                  placeholderTextColor={"black"}
                />
             </View>
 
             <View>
-               <Text
-                  style={{
-                     fontSize: 17,
-                     fontWeight: "bold",
-                  }}
-               >
-                  Phone Number
-               </Text>
-               <TextInput
+               <Label>Phone Number</Label>
+               <Input
                   value={phoneNumber}
-                  onChangeText={(text) => setPhoneNumber(text)}
-                  style={{
-                     padding: 10,
-                     borderColor: "#D0D0D0",
-                     borderWidth: 1,
-                     marginTop: 10,
-                     borderRadius: 5,
-                  }}
+                  onChange={(text) => setPhoneNumber(text)}
                   placeholder='Phone Number'
-                  placeholderTextColor={"black"}
                />
             </View>
 
-            <View
-               style={{
-                  marginVertical: 10,
-               }}
-            >
-               <Text
-                  style={{
-                     fontSize: 17,
-                     fontWeight: "bold",
-                  }}
-               >
-                  Date of Birth
-               </Text>
-               <TextInput
+            <View>
+               <Label>Date of Birth</Label>
+               <Input
                   value={dob}
-                  onChangeText={(text) => setDob(text)}
-                  style={{
-                     padding: 10,
-                     borderColor: "#D0D0D0",
-                     borderWidth: 1,
-                     marginTop: 10,
-                     borderRadius: 5,
-                  }}
-                  placeholder='Enter Date of Birth'
-                  placeholderTextColor={"black"}
+                  onChange={(text) => setDob(text)}
+                  placeholder='Date of Birth'
                />
             </View>
 
             <View>
-               <Text
-                  style={{
-                     fontSize: 17,
-                     fontWeight: "bold",
-                  }}
-               >
-                  Joining Date
-               </Text>
-               <TextInput
+               <Label>Joining Date</Label>
+               <Input
                   value={joiningDate}
-                  onChangeText={(text) => setJoiningDate(text)}
-                  style={{
-                     padding: 10,
-                     borderColor: "#D0D0D0",
-                     borderWidth: 1,
-                     marginTop: 10,
-                     borderRadius: 5,
-                  }}
+                  onChange={(text) => setJoiningDate(text)}
                   placeholder='Joining Date'
-                  placeholderTextColor={"black"}
-               />
-            </View>
-
-            <View
-               style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  marginTop: 10,
-               }}
-            >
-               <Text>Active Employee</Text>
-               <Text
-                  style={{
-                     fontWeight: "bold",
-                  }}
-               >
-                  True
-               </Text>
-            </View>
-
-            <View
-               style={{
-                  marginVertical: 10,
-               }}
-            >
-               <Text
-                  style={{
-                     fontSize: 17,
-                     fontWeight: "bold",
-                  }}
-               >
-                  Salary
-               </Text>
-               <TextInput
-                  value={salary}
-                  onChangeText={(text) => setSalary(text)}
-                  style={{
-                     padding: 10,
-                     borderColor: "#D0D0D0",
-                     borderWidth: 1,
-                     marginTop: 10,
-                     borderRadius: 5,
-                  }}
-                  placeholder='Enter Salary'
-                  placeholderTextColor={"black"}
                />
             </View>
 
             <View>
-               <Text
-                  style={{
-                     fontSize: 17,
-                     fontWeight: "bold",
-                  }}
-               >
-                  Address
-               </Text>
-               <TextInput
+               <Label>Salary</Label>
+               <Input
+                  value={salary}
+                  onChange={(text) => setSalary(text)}
+                  placeholder='Salary'
+               />
+            </View>
+
+            <View>
+               <Label>Address</Label>
+               <Input
                   value={address}
-                  onChangeText={(text) => setAddress(text)}
-                  style={{
-                     padding: 10,
-                     borderColor: "#D0D0D0",
-                     borderWidth: 1,
-                     marginTop: 10,
-                     borderRadius: 5,
-                  }}
-                  placeholder='Enter Address'
-                  placeholderTextColor={"black"}
+                  onChange={(text) => setAddress(text)}
+                  placeholder='Address'
                />
             </View>
 
             <Pressable
                onPress={handleRegister}
-               style={{
-                  backgroundColor: "#ABCABA",
-                  padding: 10,
-                  marginTop: 20,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderRadius: 5,
-               }}
+               style={styles.buttonContainer}
             >
-               <Text
-                  style={{
-                     fontWeight: "bold",
-                     color: "white",
-                  }}
-               >
-                  Add Employee
-               </Text>
+               <Text style={styles.button}>Add Employee</Text>
             </Pressable>
          </View>
       </ScrollView>
@@ -324,4 +137,33 @@ const AddDetails = () => {
 };
 export default AddDetails;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+   container: {
+      flex: 1,
+      backgroundColor: "white",
+   },
+   formContainer: {
+      paddingVertical: 25,
+      paddingHorizontal: 20,
+      rowGap: 15,
+   },
+   title: {
+      fontSize: 25,
+      fontWeight: "bold",
+      marginBottom: 10,
+   },
+   buttonContainer: {
+      backgroundColor: "#333",
+      paddingHorizontal: 10,
+      paddingVertical: 15,
+      marginVertical: 10,
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 5,
+   },
+   button: {
+      fontSize: 15,
+      fontWeight: "bold",
+      color: "white",
+   },
+});
